@@ -1,6 +1,28 @@
 biome:
   enabled: true
 
+platform-check:
+  enabled: true
+  # Permission used by your Bedrock/floodgate stack to mark Bedrock players.
+  bedrock-permission: "bedrock.notify"
+  bedrock-message: "<player> is playing on Bedrock Edition"
+  java-message: "<player> is playing on Java Edition"
+  unavailable-message: "&cUnavailable player!"
+  usage-message: "&cValid syntax: /platform <player>"
+
+keep-inventory:
+  enabled: true
+  rules:
+    pvp: true
+    mobs: false
+    world: false
+  log-kept-deaths: false
+
+spawner-proximity:
+  enabled: true
+  radius: 4
+  message: "&cYou cant place a spawner that close to another, 4 blocks."
+
 player-head-drops:
   enabled: true
   # 0.00005 = 0.005% = roughly 1 drop per 20,000 eligible PvP rolls.
@@ -21,4 +43,3 @@ messages:
   biome-disabled: "&cThe biome command is currently disabled."
   biome: "&eBiome: &f%biome% &8(%key%)"
   player-head-drop: "&6A rare trophy dropped: &f%player%'s Head"
-
