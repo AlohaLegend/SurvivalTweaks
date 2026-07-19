@@ -1,0 +1,24 @@
+biome:
+  enabled: true
+
+player-head-drops:
+  enabled: true
+  # 0.00005 = 0.005% = roughly 1 drop per 20,000 eligible PvP rolls.
+  # Cooldowns below make repeated friend/alt kills ineligible instead of rerolling.
+  chance: 0.00005
+  minimum-killer-playtime-hours: 24
+  minimum-victim-playtime-hours: 24
+  killer-roll-cooldown-hours: 6
+  victim-roll-cooldown-days: 7
+  pair-roll-cooldown-days: 30
+  block-same-ip: true
+  add-to-death-drops: true
+  message-killer-on-drop: true
+  log-drops: true
+
+messages:
+  no-permission: "&cYou do not have permission to use that command."
+  biome-disabled: "&cThe biome command is currently disabled."
+  biome: "&eBiome: &f%biome% &8(%key%)"
+  player-head-drop: "&6A rare trophy dropped: &f%player%'s Head"
+

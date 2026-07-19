@@ -1,0 +1,24 @@
+name: SurvivalTweaks
+version: 2.0.0
+main: com.alohalegend.survivaltweaks.SurvivalTweaksPlugin
+api-version: "1.21"
+author: AlohaLegend
+description: Small survival quality-of-life tweaks.
+
+commands:
+  biome:
+    description: Shows the biome you are standing in.
+    usage: "/biome"
+  survivaltweaks:
+    aliases: [stw]
+    description: SurvivalTweaks admin command
+    usage: "/survivaltweaks <reload|status>"
+    permission: survivaltweaks.admin
+
+permissions:
+  survivaltweaks.biome:
+    description: Allows use of /biome.
+    default: true
+  survivaltweaks.admin:
+    description: Allows reloading and viewing SurvivalTweaks status.
+    default: op
