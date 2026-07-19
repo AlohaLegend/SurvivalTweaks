@@ -1,5 +1,5 @@
 name: SurvivalTweaks
-version: 2.1.0
+version: 2.1.1
 main: com.alohalegend.survivaltweaks.SurvivalTweaksPlugin
 api-version: "1.21"
 author: AlohaLegend
@@ -15,7 +15,7 @@ commands:
   survivaltweaks:
     aliases: [stw]
     description: SurvivalTweaks admin command
-    usage: "/survivaltweaks <reload|status>"
+    usage: "/survivaltweaks <help|reload|status>"
     permission: survivaltweaks.admin
 
 permissions:
@@ -23,7 +23,7 @@ permissions:
     description: Allows use of /biome.
     default: true
   survivaltweaks.admin:
-    description: Allows reloading and viewing SurvivalTweaks status.
+    description: Allows viewing SurvivalTweaks help/status and reloading its config.
     default: op
   survivaltweaks.spawner.bypass:
     description: Bypasses spawner proximity placement protection.

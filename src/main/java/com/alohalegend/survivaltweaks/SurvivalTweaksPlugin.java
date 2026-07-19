@@ -88,7 +88,7 @@ public final class SurvivalTweaksPlugin extends JavaPlugin implements Listener, 
         if (!command.getName().equalsIgnoreCase("survivaltweaks")) {
             return false;
         }
-        return handleAdmin(sender, args);
+        return handleAdmin(sender, label, args);
     }
 
     @Override
@@ -102,7 +102,7 @@ public final class SurvivalTweaksPlugin extends JavaPlugin implements Listener, 
         if (!command.getName().equalsIgnoreCase("survivaltweaks") || args.length != 1) {
             return Collections.emptyList();
         }
-        return List.of("reload", "status").stream()
+        return List.of("help", "reload", "status").stream()
             .filter(value -> value.startsWith(args[0].toLowerCase(Locale.ROOT)))
             .toList();
     }
@@ -216,7 +216,7 @@ public final class SurvivalTweaksPlugin extends JavaPlugin implements Listener, 
         return true;
     }
 
-    private boolean handleAdmin(CommandSender sender, String[] args) {
+    private boolean handleAdmin(CommandSender sender, String label, String[] args) {
         if (!sender.hasPermission("survivaltweaks.admin")) {
             sender.sendMessage(color(getConfig().getString("messages.no-permission", "&cYou do not have permission to use that command.")));
             return true;
@@ -244,8 +244,22 @@ public final class SurvivalTweaksPlugin extends JavaPlugin implements Listener, 
             sender.sendMessage("Recorded drops: " + childCount("drops"));
             return true;
         }
-        sender.sendMessage("Usage: /survivaltweaks <reload|status>");
+        if (args.length == 0 || (args.length == 1 && args[0].equalsIgnoreCase("help"))) {
+            sendAdminHelp(sender, label);
+            return true;
+        }
+        sender.sendMessage("Usage: /" + label + " <help|reload|status>");
         return true;
+    }
+
+    private void sendAdminHelp(CommandSender sender, String label) {
+        sender.sendMessage(color("&6SurvivalTweaks &7- small survival quality-of-life controls"));
+        sender.sendMessage(color("&e/biome &7- Shows your current biome. Permission: &fsurvivaltweaks.biome"));
+        sender.sendMessage(color("&e/platform <player> &7- Shows whether an online player is marked Bedrock or Java."));
+        sender.sendMessage(color("&e/" + label + " status &7- Shows enabled modules, counters, and head-roll data totals."));
+        sender.sendMessage(color("&e/" + label + " reload &7- Reloads config.yml and player-head-rolls.yml from disk."));
+        sender.sendMessage(color("&7Modules: keep-inventory rules, spawner spacing, rare player heads, biome lookup, platform check."));
+        sender.sendMessage(color("&7Bypass: &fsurvivaltweaks.spawner.bypass &7or legacy &fspawnerslimit.bypass"));
     }
 
     private void registerCommand(String name) {
@@ -268,7 +282,7 @@ public final class SurvivalTweaksPlugin extends JavaPlugin implements Listener, 
         spawnerProximityEnabled = getConfig().getBoolean("spawner-proximity.enabled", true);
         spawnerProximityRadius = Math.max(0, Math.min(32, getConfig().getInt("spawner-proximity.radius", 4)));
         spawnerProximityMessage = getConfig().getString("spawner-proximity.message",
-            getConfig().getString("message", "&cYou cant place a spawner that close to another, 4 blocks."));
+            getConfig().getString("message", "&cYou can't place a spawner that close to another, 4 blocks."));
         platformCheckEnabled = getConfig().getBoolean("platform-check.enabled", true);
         platformBedrockPermission = getConfig().getString("platform-check.bedrock-permission", "bedrock.notify");
         platformBedrockMessage = getConfig().getString("platform-check.bedrock-message",

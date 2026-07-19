@@ -1,44 +1,91 @@
+# SurvivalTweaks configuration
+#
+# This plugin intentionally bundles a few small survival-server features that do
+# not need their own separate plugin jars. All modules can be disabled
+# independently. Use /survivaltweaks reload after editing this file.
+
 biome:
+  # Enables /biome for players with survivaltweaks.biome.
+  # The command reports both a readable biome name and the Minecraft namespaced key.
   enabled: true
 
 platform-check:
+  # Enables /platform <player>.
+  # This command checks an online player's permissions and does not query Floodgate directly.
   enabled: true
-  # Permission used by your Bedrock/floodgate stack to mark Bedrock players.
+
+  # Permission your Bedrock stack assigns to Bedrock players.
+  # On this network, bedrock.notify is used as the marker.
   bedrock-permission: "bedrock.notify"
+
+  # Messages support legacy ampersand color codes and both <player> and %player%.
   bedrock-message: "<player> is playing on Bedrock Edition"
   java-message: "<player> is playing on Java Edition"
   unavailable-message: "&cUnavailable player!"
   usage-message: "&cValid syntax: /platform <player>"
 
 keep-inventory:
+  # Enables selective keep-inventory handling.
+  # When a rule keeps inventory, drops and dropped XP are cleared and the player keeps XP levels.
   enabled: true
+
   rules:
+    # PVP covers direct player kills and player-shot projectiles.
     pvp: true
+
+    # Mobs covers entity-caused deaths that are not caused by a player.
     mobs: false
+
+    # World covers fall damage, lava, void, drowning, suffocation, and other non-entity deaths.
     world: false
+
+  # Useful while testing policy changes. Leave false in production unless investigating.
   log-kept-deaths: false
 
 spawner-proximity:
+  # Prevents placing a spawner too close to another spawner.
+  # Players with survivaltweaks.spawner.bypass or legacy spawnerslimit.bypass ignore this rule.
   enabled: true
+
+  # Cube radius in blocks around the placed spawner. Clamped by the plugin to 0-32.
+  # A radius of 4 means another spawner within +/-4 blocks on X, Y, and Z blocks placement.
   radius: 4
-  message: "&cYou cant place a spawner that close to another, 4 blocks."
+  message: "&cYou can't place a spawner that close to another, 4 blocks."
 
 player-head-drops:
+  # Enables rare player-head drops from eligible PVP deaths only.
   enabled: true
-  # 0.00005 = 0.005% = roughly 1 drop per 20,000 eligible PvP rolls.
-  # Cooldowns below make repeated friend/alt kills ineligible instead of rerolling.
+
+  # Drop chance after every eligibility check passes.
+  # 0.00005 = 0.005% = roughly 1 successful drop per 20,000 eligible PVP rolls.
+  # This is intentionally very rare for long survival seasons.
   chance: 0.00005
+
+  # Both players must meet these playtime requirements before a roll can happen.
   minimum-killer-playtime-hours: 24
   minimum-victim-playtime-hours: 24
+
+  # Anti-farming cooldowns. Ineligible kills do not roll.
+  # killer-roll-cooldown-hours: one roll per killer per window.
+  # victim-roll-cooldown-days: one roll per victim per window.
+  # pair-roll-cooldown-days: one roll per killer-victim pair per window.
   killer-roll-cooldown-hours: 6
   victim-roll-cooldown-days: 7
   pair-roll-cooldown-days: 30
+
+  # Blocks rolls when killer and victim have the same visible IP address.
+  # This is an anti-alt/friend-farming guard, not a complete identity system.
   block-same-ip: true
+
+  # true adds the head to the normal death drops. false drops it naturally at the death location.
   add-to-death-drops: true
+
+  # Sends the killer a message and writes a console log only when a head actually drops.
   message-killer-on-drop: true
   log-drops: true
 
 messages:
+  # Shared command messages. Legacy ampersand colors are supported.
   no-permission: "&cYou do not have permission to use that command."
   biome-disabled: "&cThe biome command is currently disabled."
   biome: "&eBiome: &f%biome% &8(%key%)"
